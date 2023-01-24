@@ -1,7 +1,9 @@
 # Python program to draw star
 # using Turtle Programming
+import tkinter
 import turtle
 star = turtle.Turtle()
+
 
 star.right(75)
 star.forward(100)
