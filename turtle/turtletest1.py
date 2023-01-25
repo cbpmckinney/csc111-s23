@@ -2,7 +2,10 @@
 # using Turtle Programming
 
 import turtle
+import math
 star = turtle.Turtle()
+
+
 
 
 star.right(75)
