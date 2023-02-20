@@ -8,15 +8,15 @@ def caesar(thestring, shift):
     return message
 
 
-mystring = "ILOVEYOU"
+mystring = "WABASH"
 print("Original Text: ", mystring)
-print("Cipher Text:   ", caesar(mystring, -13))
+print("Cipher Text:   ", caesar(mystring, 3))
 
-ciphertext = "VYBIRLBH"
-print("------------------------------")
+#ciphertext = "VYBIRLBH"
+#print("------------------------------")
 
-for i in range(1,26):
-    print("Key: ", i , "\t", caesar(ciphertext, -i))
+#for i in range(1,26):
+#    print("Key: ", i , "\t", caesar(ciphertext, -i))
 
 
 
