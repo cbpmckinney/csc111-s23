@@ -14,6 +14,7 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 # Create your objects here.
 ev3 = EV3Brick()
+mywatch = StopWatch()
 
 gyro = GyroSensor(Port.S1)
 leftmotor = Motor(Port.C)
@@ -21,11 +22,30 @@ rightmotor = Motor(Port.B)
 robot = DriveBase(leftmotor, rightmotor, wheel_diameter=55.5, axle_track=104)
 
 targetheading = 0
-kp = 1
+kp = 2
+kd = 121
+ki = 1
 
+mywatch.reset()
+mywatch.resume()
+currenttime = 0
+oldtime = 0
+currenterror = 0
+olderror = 0
 while True:
-    error = gyro.angle() - targetheading
-    robot.drive(100, kp*error)
+    currenttime = mywatch.time()
+    currenterror = gyro.angle() - targetheading
+    try:
+        rateoferror = (currenterror - olderror)/(currenttime - oldtime)
+        print(rateoferror)
+    except:
+        rateoferror = 0
+        print("exception!")
+
+    robot.drive(100, kp*currenterror + kd*rateoferror)
+    oldtime = currenttime
+    olderror = currenterror
+    wait(1)
 
 
 
