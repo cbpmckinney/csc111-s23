@@ -45,5 +45,38 @@ class ComplexNumber:
         return ComplexNumber(ans.a / denom, ans.b / denom)
 
 
-canvas = image.Image("blank.gif")
+#canvas = image.Image("blank.gif")
+canvas = image.EmptyImage(400,400)
 
+width = canvas.getWidth()
+height = canvas.getHeight()
+
+win = image.ImageWin(width,height,"Mandelbrot Set")
+
+
+
+for row in range(height):
+    for col in range(width):
+
+        z0 = ComplexNumber((col-200)/100,(200-row)/100)
+        zn = z0
+
+        colorn = 255
+        for i in range(255):
+            if zn.Normsq() > 4:
+                colorn = i
+                break 
+            zn = zn*zn*zn + z0
+
+        pixel = canvas.getPixel(col,row)
+        pixel.setRed(colorn)
+        pixel.setGreen(0)
+        pixel.setBlue(0)
+
+        canvas.setPixel(col,row,pixel)
+        
+
+
+canvas.draw(win)
+
+win.exit_on_click()
