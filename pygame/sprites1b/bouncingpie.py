@@ -58,9 +58,17 @@ class MouseCursor(pygame.sprite.Sprite):
 
 
 allsprites = pygame.sprite.Group()
-#for i in range(10):
-#    allsprites.add(Ball("pie.png", random.randrange(16,640-16), random.randrange(16,480-16), 1, 1, 0, 0))
-allsprites.add(MouseCursor("pie.png",100,100))
+MyBall = Ball("pie.png", 100, 100, 0, 0, 0, 0)
+
+ballgroup = pygame.sprite.Group()
+ballgroup.add(MyBall)
+
+for i in range(2):
+    allsprites.add(Ball("pie.png", random.randrange(16,640-16), 100, 1, 0, 0, 0))
+
+cursorgroup = pygame.sprite.Group()
+MyCursor = MouseCursor("pie.png",100,100)
+cursorgroup.add(MyCursor)
 
 
 
@@ -68,11 +76,28 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    print(pygame.mouse.get_pos())
+        
+
+
+
+    #print(pygame.mouse.get_pos())
     screen.fill("white")
     allsprites.draw(screen)
+    ballgroup.draw(screen)
+    cursorgroup.draw(screen)
+    
     pygame.display.flip()
 
+    collisionlist = pygame.sprite.spritecollide(MyCursor, allsprites, False, collided = None)
+    if len(collisionlist) > 0:
+        if pygame.mouse.get_pressed()[0]:
+            collisionlist[0].kill()
+
     allsprites.update()
+    ballgroup.update()
+    cursorgroup.update()
     clock.tick(60)
+
+
+
 pygame.quit()
