@@ -5,11 +5,13 @@ import math
 from player import *
 from spritesheet import *
 from enemies import *
+from hud import *
 
 
 pygame.init()
 gamewindow = pygame.display.set_mode((640,480))
 pygame.display.set_caption("Clonius")
+hud = Hud(gamewindow, (640,480))
 
 exit = False
 running = True 
@@ -20,8 +22,8 @@ dt = 0
 ships_sheet = spritesheet('ships.png')
 projs_sheet = spritesheet('projectiles.png')
 
-titlefont = pygame.font.Font('freesansbold.ttf',64)
-hudfont = pygame.font.Font('freesansbold.ttf',24)
+# titlefont = pygame.font.Font('freesansbold.ttf',64)
+# hudfont = pygame.font.Font('freesansbold.ttf',24)
 
 
 player = Player(50,240,ships_sheet.image_at((32,64,16,16)))
@@ -46,10 +48,7 @@ while running:
 
         gamewindow.fill('black')
 
-        titletext = titlefont.render("Clonius IV", True, "green")
-        titletextrect = titletext.get_rect()
-        titletextrect.center = (320,200)
-        gamewindow.blit(titletext, titletextrect)
+        hud.main_menu("Clonius IV", "green")
 
         pygame.display.flip()
 
@@ -74,12 +73,8 @@ while running:
         gamewindow.blit(player.image, player.rect)
         playerprojgroup.draw(gamewindow)
         enemiesgroup.draw(gamewindow)
-
-        scorestring = "Score: " + str(playerscore)
-        scoretext = hudfont.render(scorestring, True, "red")
-        scoretextrect = scoretext.get_rect()
-        scoretextrect.topleft = (8,8)
-        gamewindow.blit(scoretext, scoretextrect)
+        hud.score = playerscore
+        hud.game_info()
 
         pygame.display.flip()
         player.update()
