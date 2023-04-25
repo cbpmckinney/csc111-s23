@@ -20,7 +20,7 @@ ships_sheet = spritesheet('ships.png')
 projs_sheet = spritesheet('projectiles.png')
 
 player = Player(50,240,ships_sheet.image_at((32,64,16,16)))
-
+playerprojgroup = pygame.sprite.Group()
 
 
 while running:
@@ -36,13 +36,17 @@ while running:
     if keys[pygame.K_s]:
         player.y += 300*dt
     if keys[pygame.K_SPACE]:
-        player.fire()
+        player.fire(projs_sheet.image_at((0,8,8,8)), playerprojgroup)
 
 
     gamewindow.fill("black")
     
     gamewindow.blit(player.image, player.rect)
+    playerprojgroup.draw(gamewindow)
+
+
 
     pygame.display.flip()
     player.update()
+    playerprojgroup.update()
     dt = clock.tick(60)/1000

@@ -1,4 +1,5 @@
 import pygame
+from projectiles import *
 
 class Player(pygame.sprite.Sprite):
 
@@ -11,8 +12,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def fire(self):
-        
+    def fire(self, image, group):
+        image = pygame.transform.scale2x(pygame.transform.rotate(image,-90))
+        proj = PlayerProjectile(self.x+32, self.y+8, 10, 0, image)
+        group.add(proj)
 
     def update(self):
         self.rect.x = self.x
