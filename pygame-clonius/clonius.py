@@ -29,6 +29,9 @@ gamestate = 0
 
 enemiesgroup = pygame.sprite.Group()
 
+lasersound = pygame.mixer.Sound('laser.mp3')
+
+
 
 while running:
 
@@ -61,8 +64,9 @@ while running:
         if keys[pygame.K_s]:
             player.y += 300*dt
         if keys[pygame.K_SPACE]:
+            lasersound.play()
             player.fire(projs_sheet.image_at((0,8,8,8)), playerprojgroup)
-
+            
         gamewindow.fill("black")
         
         for object in pygame.sprite.spritecollide(boss, playerprojgroup, False):

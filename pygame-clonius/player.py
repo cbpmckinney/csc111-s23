@@ -23,6 +23,7 @@ class Player(pygame.sprite.Sprite):
             image = pygame.transform.scale2x(pygame.transform.rotate(image,-90))
             proj = PlayerProjectile(self.x+32, self.y+8, 10, 0, image)
             group.add(proj)
+            
 
     def update(self):
         self.rect.x = self.x
