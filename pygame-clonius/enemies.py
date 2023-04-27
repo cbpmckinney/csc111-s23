@@ -13,8 +13,11 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = self.y 
     
         
-    def update():
-        pass
+    def update(self):
+        self.rect.x = self.x
+        self.rect.y = self.y
+        if self.health <= 0:
+            self.kill()
 
 
 class Fighter(Enemy):
@@ -29,5 +32,5 @@ class Bomber(Enemy):
 
 class Boss(Enemy):
     def __init__(self,x,y,image):
-        super().__init__(x,y,image)
+        super().__init__(x,y,pygame.transform.scale_by(image,4))
         self.health = 100

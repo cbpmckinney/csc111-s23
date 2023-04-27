@@ -9,6 +9,7 @@ from hud import *
 
 
 pygame.init()
+pygame.mixer.init()
 gamewindow = pygame.display.set_mode((640,480))
 pygame.display.set_caption("Clonius")
 hud = Hud(gamewindow, (640,480))
@@ -22,17 +23,12 @@ dt = 0
 ships_sheet = spritesheet('ships.png')
 projs_sheet = spritesheet('projectiles.png')
 
-# titlefont = pygame.font.Font('freesansbold.ttf',64)
-# hudfont = pygame.font.Font('freesansbold.ttf',24)
-
-
 player = Player(50,240,ships_sheet.image_at((32,64,16,16)))
 playerprojgroup = pygame.sprite.Group()
 gamestate = 0
 
 enemiesgroup = pygame.sprite.Group()
-boss = Boss(400,240,ships_sheet.image_at((48,64,16,16)))
-enemiesgroup.add(boss)
+
 
 while running:
 
@@ -55,7 +51,9 @@ while running:
     if gamestate == 1:
         playerscore = 0
         gamestate = 1.1
-        
+        boss = Boss(400,240,ships_sheet.image_at((48,64,16,16)))
+        enemiesgroup.add(boss)
+
     if gamestate == 1.1:
         
         if keys[pygame.K_w]:
@@ -67,8 +65,11 @@ while running:
 
         gamewindow.fill("black")
         
+        for object in pygame.sprite.spritecollide(boss, playerprojgroup, False):
+            object.kill()
+            boss.health -= 1
         
-        
+    
 
         gamewindow.blit(player.image, player.rect)
         playerprojgroup.draw(gamewindow)
