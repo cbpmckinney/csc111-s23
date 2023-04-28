@@ -6,6 +6,7 @@ from player import *
 from spritesheet import *
 from enemies import *
 from hud import *
+from explosions import *
 
 
 pygame.init()
@@ -28,6 +29,7 @@ playerprojgroup = pygame.sprite.Group()
 gamestate = 0
 
 enemiesgroup = pygame.sprite.Group()
+explosionsgroup = pygame.sprite.Group()
 
 lasersound = pygame.mixer.Sound('laser.mp3')
 
@@ -70,6 +72,7 @@ while running:
         gamewindow.fill("black")
         
         for object in pygame.sprite.spritecollide(boss, playerprojgroup, False):
+            explosionsgroup.add(Explosion(object.x,object.y,1))
             object.kill()
             boss.health -= 1
         
@@ -78,6 +81,7 @@ while running:
         gamewindow.blit(player.image, player.rect)
         playerprojgroup.draw(gamewindow)
         enemiesgroup.draw(gamewindow)
+        explosionsgroup.draw(gamewindow)
         hud.score = playerscore
         hud.game_info()
 
@@ -85,4 +89,5 @@ while running:
         player.update()
         playerprojgroup.update()
         enemiesgroup.update()
-        dt = clock.tick(60)/1000
+        explosionsgroup.update()
+        dt = clock.tick(10)/1000
